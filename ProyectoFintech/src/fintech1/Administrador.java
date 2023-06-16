@@ -1,6 +1,9 @@
 package fintech1;
 
 import fintech1.DB.Conexion;
+import fintech1.IGU.ActualizarUsuario;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.Date;
@@ -10,6 +13,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import fintech1.IGU.VerUsuarios;
 
 public class Administrador extends Usuario {
 
@@ -18,7 +22,7 @@ public class Administrador extends Usuario {
     public Administrador() {
     }
 
-    public Administrador(double saldo, String cedula, String nombre, String apellidos, String direccionCorrespondal,
+    public Administrador(String cedula, String nombre, String apellidos, String direccionCorrespondal,
             String direccionEmail, String celular, String contraseña) {
         super(cedula, nombre, apellidos, direccionCorrespondal, direccionEmail, celular, contraseña);
         this.ultimoLogin = ultimoLogin;
@@ -107,7 +111,7 @@ public class Administrador extends Usuario {
 
         try {
             Connection cn = Conexion.conectar();
-            PreparedStatement pst = cn.prepareStatement("select celular, cedula, nombre, apellidos, direccionCorrespondencia, direccionEmail, contraseña, id from usuarios");
+            PreparedStatement pst = cn.prepareStatement("select celular, cedula, nombre, apellidos, direccionCorrespondencia, direccionEmail, contraseña from usuarios");
 
             ResultSet rs = pst.executeQuery();
 
@@ -120,12 +124,11 @@ public class Administrador extends Usuario {
             modelo.addColumn("Direccion");
             modelo.addColumn("Email");
             modelo.addColumn("Contraseña");
-            modelo.addColumn("ID");
 
             while (rs.next()) {
-                Object[] fila = new Object[8];
+                Object[] fila = new Object[7];
 
-                for (int i = 0; i < 8; i++) {
+                for (int i = 0; i < 7; i++) {
                     fila[i] = rs.getObject(i + 1);
                 }
                 modelo.addRow(fila);
@@ -133,34 +136,73 @@ public class Administrador extends Usuario {
 
             jt.setModel(modelo);
 
+            jt.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    int fila = jt.getSelectedRow();
+
+                    if (fila != -1) {
+                        String celular = jt.getValueAt(fila, 0).toString();
+                        String cedula = jt.getValueAt(fila, 1).toString();
+                        String nombre = jt.getValueAt(fila, 2).toString();
+                        String apellidos = jt.getValueAt(fila, 3).toString();
+                        String direccion = jt.getValueAt(fila, 4).toString();
+                        String email = jt.getValueAt(fila, 5).toString();
+                        String contraseña = jt.getValueAt(fila, 6).toString();
+
+                        abrirInterfaz(celular, cedula, nombre, apellidos, direccion, email, contraseña);
+                    }
+                }
+            });
+
+            cn.close();
         } catch (SQLException e) {
             System.out.println(e);
         }
 
     }
 
-    public Usuario mostrarPersona() {
-
-        Connection cn = Conexion.conectar();
-        PreparedStatement pst;
-        Usuario usuario = null;
-        try {
-            pst = cn.prepareStatement("select * from usuarios");
-            ResultSet rs = pst.executeQuery();
-
-            usuario = new Usuario();
-            usuario.setCelular(rs.getString(1));
-            usuario.setCedula(rs.getString(2));
-            usuario.setNombre(rs.getString(3));
-            usuario.setApellidos(rs.getString(4));
-            usuario.setDireccionCorrespondencia(rs.getString(5));
-            usuario.setDireccionEmail(rs.getString(6));
-            usuario.setContraseña(rs.getString(7));
-        } catch (SQLException ex) {
-            Logger.getLogger(Administrador.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return usuario;
+    private void abrirInterfaz(String celular, String cedula, String nombre, String apellidos, String direccion, String email, String contraseña) {
+        ActualizarUsuario actUsuario = new ActualizarUsuario();
+        actUsuario.setVisible(true);
     }
 
+    public void crearAdmin(String cedula, String nombre, String apellidos, String direccionCorrespondencia,
+            String direccionEmail, String celular, String contraseña) {
+        try {
+            Connection cn2 = Conexion.conectar();
+            PreparedStatement pst2 = cn2.prepareStatement("select celularAdm from administradores where celularAdm = ?");
+            pst2.setString(1, celular);
+            ResultSet rs = pst2.executeQuery();
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(null, "El numero de telefono ingresado ya se encuentra registrado");
+            } else {
+                try {
+                    Connection cn = Conexion.conectar();
+                    PreparedStatement pst = cn.prepareStatement("insert into administradores values(?,?,?,?,?,?,?)");
+
+                    pst.setString(1, celular);
+                    pst.setString(2, cedula);
+                    pst.setString(3, nombre);
+                    pst.setString(4, apellidos);
+                    pst.setString(5, direccionCorrespondencia);
+                    pst.setString(6, direccionEmail);
+                    pst.setString(7, contraseña);
+
+                    pst.executeUpdate();
+
+                    cn.close();
+
+                    JOptionPane.showMessageDialog(null, "Administrador creado con exito");
+
+                } catch (SQLException e) {
+                    System.out.println(e);
+                    JOptionPane.showMessageDialog(null, "Error al crear el Administrador");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Error en la base de datos");
+        }
+
+    }
 }

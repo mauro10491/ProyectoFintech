@@ -4,25 +4,32 @@
  */
 package fintech1.IGU;
 
-import com.sun.jdi.connect.spi.Connection;
 import fintech1.Administrador;
 import fintech1.Usuario;
 import fintech1.DB.Conexion;
 import java.sql.*;
+
 /**
  *
  * @author mauri
  */
 public class ActualizarUsuario extends javax.swing.JFrame {
-
     /**
      * Creates new form ActualizarUsuario
      */
     public ActualizarUsuario() {
         initComponents();
         
-
+        Administrador admin = new Administrador();
+        
+       
+        
+        
     }
+
+    
+
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -47,7 +54,7 @@ public class ActualizarUsuario extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         txt_contraseña = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btn_actualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -65,10 +72,10 @@ public class ActualizarUsuario extends javax.swing.JFrame {
 
         jLabel7.setText("Contraseña");
 
-        jButton1.setText("Actualizar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_actualizar.setText("Actualizar");
+        btn_actualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btn_actualizarActionPerformed(evt);
             }
         });
 
@@ -98,7 +105,7 @@ public class ActualizarUsuario extends javax.swing.JFrame {
                             .addComponent(jLabel2)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(149, 149, 149)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btn_actualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(165, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -133,14 +140,15 @@ public class ActualizarUsuario extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txt_contraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(78, 78, 78)
-                .addComponent(jButton1)
+                .addComponent(btn_actualizar)
                 .addContainerGap(94, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btn_actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_actualizarActionPerformed
+
         String cedula = txt_cedula.getText();
         String nombre = txt_nombre.getText();
         String apellidos = txt_apellido.getText();
@@ -148,10 +156,14 @@ public class ActualizarUsuario extends javax.swing.JFrame {
         String direccionEmail = txt_email.getText();
         String celular = txt_celular.getText();
         String contraseña = txt_contraseña.getText();
-        
+
         Administrador admin = new Administrador();
         admin.editarUsuario(cedula, nombre, apellidos, direccionCorrespondencia, direccionEmail, celular, contraseña);
-    }//GEN-LAST:event_jButton1ActionPerformed
+        
+        Usuario usuario = new Usuario(cedula, nombre, apellidos, direccionCorrespondencia, direccionEmail, celular, contraseña);
+        
+        txt_nombre.setText(admin.getNombre());
+    }//GEN-LAST:event_btn_actualizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -189,7 +201,7 @@ public class ActualizarUsuario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btn_actualizar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -205,4 +217,7 @@ public class ActualizarUsuario extends javax.swing.JFrame {
     private javax.swing.JTextField txt_email;
     private javax.swing.JTextField txt_nombre;
     // End of variables declaration//GEN-END:variables
+
+
+
 }

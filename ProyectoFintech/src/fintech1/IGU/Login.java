@@ -5,6 +5,7 @@
 package fintech1.IGU;
 
 import fintech1.DB.Conexion;
+import fintech1.Usuario;
 import java.sql.*;
 import javax.swing.JOptionPane;
 
@@ -19,7 +20,7 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
-        
+
         setLocationRelativeTo(null);
     }
 
@@ -125,15 +126,23 @@ public class Login extends javax.swing.JFrame {
                 PreparedStatement pst = cn.prepareStatement("select * from usuarios where celular = '" + celular + "' and contraseña = '" + password + "'");
 
                 ResultSet rs = pst.executeQuery();
-                
-                if(rs.next()){
-                    Administrador admin = new Administrador();
-                    admin.setVisible(true);
+
+                if (rs.next()) {
+                    Cliente cliente = new Cliente();
+                    cliente.setVisible(true);
+                    JOptionPane.showMessageDialog(null, "Login como usuario");
                 } else {
-                    JOptionPane.showMessageDialog(null, "Datos de acceso incorrectos");
+                    Connection cn2 = Conexion.conectar();
+                    PreparedStatement pst2 = cn.prepareStatement("select * from administradores where celular = '" + celular + "' and contraseña = '" + password + "'");
+
+                    ResultSet rs2 = pst.executeQuery();
+                    if (rs2.next()) {
+                        Administrador admin = new Administrador();
+                        admin.setVisible(true);
+                        JOptionPane.showMessageDialog(null, "Login como administrador");
+
+                    }
                 }
-
-
 
             } catch (SQLException e) {
                 System.out.println(e);
@@ -151,7 +160,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        CrearUsuario crearUsuario = new CrearUsuario();
+        CrearUsuario_1 crearUsuario = new CrearUsuario_1();
         crearUsuario.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 

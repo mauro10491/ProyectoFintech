@@ -98,7 +98,9 @@ public class Usuario {
             } else {
                 try {
                     Connection cn = Conexion.conectar();
-                    PreparedStatement pst = cn.prepareStatement("insert into usuarios values(?,?,?,?,?,?,?,?)");
+                    PreparedStatement pst = cn.prepareStatement("insert into usuarios values(?,?,?,?,?,?,?)");
+                    
+                    PreparedStatement psts = cn.prepareStatement("insert into cuentas values(?,?)");
 
                     pst.setString(1, celular);
                     pst.setString(2, cedula);
@@ -107,9 +109,12 @@ public class Usuario {
                     pst.setString(5, direccionCorrespondencia);
                     pst.setString(6, direccionEmail);
                     pst.setString(7, contraseña);
-                    pst.setInt(8, 0);
+                    
+                    psts.setDouble(1, 0);
+                    psts.setString(2, celular);
 
                     pst.executeUpdate();
+                    psts.executeUpdate();
 
                     cn.close();
 
@@ -126,7 +131,7 @@ public class Usuario {
         }
     }
 
-    public void restaurarContrasñe(String password, String confirmarPassword, String celular) {
+    public void restaurarContraseña(String password, String confirmarPassword, String celular) {
 
         try {
             Connection cn2 = Conexion.conectar();
@@ -167,5 +172,67 @@ public class Usuario {
             System.out.println(e.getMessage());
         }
 
+    }
+
+    public void editarUsuario(String cedula, String nombre, String apellidos, String direccionCorrespondencia,
+            String direccionEmail, String celular, String contraseña) {
+
+        int validacion = 0;
+
+        if (cedula.equals("")) {
+            validacion++;
+        }
+        if (nombre.equals("")) {
+            validacion++;
+        }
+        if (apellidos.equals("")) {
+            validacion++;
+        }
+        if (direccionCorrespondencia.equals("")) {
+            validacion++;
+        }
+        if (direccionEmail.equals("")) {
+            validacion++;
+        }
+        if (celular.equals("")) {
+            validacion++;
+        }
+        if (contraseña.equals("")) {
+            validacion++;
+        }
+
+        if (validacion == 0) {
+            try {
+                Connection cn = Conexion.conectar();
+                PreparedStatement pst = cn.prepareStatement("select celular from usuarios where celular = '" + celular + "'");
+
+                ResultSet rs = pst.executeQuery();
+
+                if (rs.next()) {
+                    JOptionPane.showMessageDialog(null, "Numero de telefono no disponible");
+                } else {
+                    Connection cn2 = Conexion.conectar();
+                    PreparedStatement pst2 = cn2.prepareStatement("update usuarios set celular =?, cedula=?, nombre=?, apellidos=?, direccionCorrespondencia=?, direccionEmail=?, contraseña=?");
+
+                    pst2.setString(1, celular);
+                    pst2.setString(2, cedula);
+                    pst2.setString(3, nombre);
+                    pst2.setString(4, apellidos);
+                    pst2.setString(5, direccionCorrespondencia);
+                    pst2.setString(6, direccionEmail);
+                    pst2.setString(7, contraseña);
+
+                    pst2.executeUpdate();
+                    pst2.close();
+
+                    JOptionPane.showMessageDialog(null, "Actualización exitosa");
+                }
+
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Debes de llenar los campos");
+        }
     }
 }

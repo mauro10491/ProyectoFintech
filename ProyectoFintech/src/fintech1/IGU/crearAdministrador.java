@@ -3,22 +3,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package fintech1.IGU;
-
-import fintech1.Usuario;
-
+import fintech1.Administrador;
 /**
  *
  * @author mauri
  */
-public class CrearUsuario extends javax.swing.JFrame {
-    
+public class crearAdministrador extends javax.swing.JFrame {
+
     /**
-     * Creates new form CrearUsuario
+     * Creates new form crearAdministrador
      */
-    public CrearUsuario() {
+    public crearAdministrador() {
         initComponents();
-        
-        setLocationRelativeTo(null);
     }
 
     /**
@@ -30,38 +26,37 @@ public class CrearUsuario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jProgressBar1 = new javax.swing.JProgressBar();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        txt_nombre = new javax.swing.JTextField();
-        txt_apellidos = new javax.swing.JTextField();
-        txt_cedula = new javax.swing.JTextField();
         txt_direccion = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         txt_email = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         txt_celular = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         txt_password = new javax.swing.JPasswordField();
+        jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        txt_nombre = new javax.swing.JTextField();
+        txt_apellidos = new javax.swing.JTextField();
+        txt_cedula = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel1.setText("Nombre");
-
-        jLabel2.setText("Apellidos");
-
-        jLabel3.setText("Cedula");
-
-        jLabel4.setText("Direccion de correspondencia ");
 
         jLabel5.setText("Email");
 
         jLabel6.setText("Celular");
 
+        jLabel1.setText("Nombre");
+
+        jLabel2.setText("Apellidos");
+
         jLabel7.setText("Contraseña");
+
+        jLabel3.setText("Cedula");
+
+        jLabel4.setText("Direccion de correspondencia ");
 
         jButton1.setText("CREAR USUARIO");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -131,7 +126,7 @@ public class CrearUsuario extends javax.swing.JFrame {
                 .addComponent(jLabel7)
                 .addGap(2, 2, 2)
                 .addComponent(txt_password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(36, 36, 36))
         );
@@ -148,11 +143,11 @@ public class CrearUsuario extends javax.swing.JFrame {
         String direccionEmail = txt_email.getText();
         String celular = txt_celular.getText();
         String contraseña = txt_password.getText();
-        
-        Usuario usuario = new Usuario();
-        
-        usuario.crearUsuario(cedula, nombre, apellidos, direccionCorrespondenci, direccionEmail, celular, contraseña);
-        
+
+        Administrador admin = new Administrador();
+
+        admin.crearAdmin(cedula, nombre, apellidos, direccionCorrespondenci, direccionEmail, celular, contraseña);
+
         txt_cedula.setText("");
         txt_nombre.setText("");
         txt_apellidos.setText("");
@@ -179,20 +174,20 @@ public class CrearUsuario extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CrearUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(crearAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CrearUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(crearAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CrearUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(crearAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CrearUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(crearAdministrador.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CrearUsuario().setVisible(true);
+                new crearAdministrador().setVisible(true);
             }
         });
     }
@@ -206,7 +201,6 @@ public class CrearUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JTextField txt_apellidos;
     private javax.swing.JTextField txt_cedula;
     private javax.swing.JTextField txt_celular;

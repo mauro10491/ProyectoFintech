@@ -5,6 +5,7 @@
 package fintech1.IGU;
 
 import fintech1.Administrador;
+import fintech1.Usuario;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
@@ -25,6 +26,7 @@ public class VerUsuarios extends javax.swing.JFrame {
     admin.verListaUsuarios(jt);
     jScrollPane2.setViewportView(jt);
     
+    admin.verListaUsuarios(jt); 
     }
 
     /**
@@ -66,26 +68,30 @@ public class VerUsuarios extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jt);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(90, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(87, 87, 87))
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 25, Short.MAX_VALUE))
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtMouseClicked
 
     /**
      * @param args the command line arguments
@@ -127,4 +133,5 @@ public class VerUsuarios extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jt;
     // End of variables declaration//GEN-END:variables
+
 }
