@@ -18,16 +18,21 @@ public class VerUsuarios extends javax.swing.JFrame {
     public VerUsuarios() {
         initComponents();
         
-            
-    Administrador admin = new Administrador();
-    
-    jt = new JTable();
-    
-    admin.verListaUsuarios(jt);
-    jScrollPane2.setViewportView(jt);
-    
-    admin.verListaUsuarios(jt); 
+        setLocationRelativeTo(null);
+        setResizable(false);
+
+        Administrador admin = new Administrador();
+        
+        jt = new JTable();
+
+        admin.verListaUsuarios(jt);
+        jScrollPane2.setViewportView(jt);
+
+        admin.verListaUsuarios(jt);    
+       
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -79,11 +84,11 @@ public class VerUsuarios extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
         );
 
         pack();

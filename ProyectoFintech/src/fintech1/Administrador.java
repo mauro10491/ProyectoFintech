@@ -45,7 +45,7 @@ public class Administrador extends Usuario {
     }
 
     public void editarUsuario(String cedula, String nombre, String apellidos, String direccionCorrespondencia,
-            String direccionEmail, String celular, String contraseña) {
+            String direccionEmail, String contraseña) {
 
         int validacion = 0;
 
@@ -64,9 +64,6 @@ public class Administrador extends Usuario {
         if (direccionEmail.equals("")) {
             validacion++;
         }
-        if (celular.equals("")) {
-            validacion++;
-        }
         if (contraseña.equals("")) {
             validacion++;
         }
@@ -82,15 +79,14 @@ public class Administrador extends Usuario {
                     JOptionPane.showMessageDialog(null, "Numero de telefono no disponible");
                 } else {
                     Connection cn2 = Conexion.conectar();
-                    PreparedStatement pst2 = cn2.prepareStatement("update usuarios set celular =?, cedula=?, nombre=?, apellidos=?, direccionCorrespondencia=?, direccionEmail=?, contraseña=?");
+                    PreparedStatement pst2 = cn2.prepareStatement("update usuarios set cedula=?, nombre=?, apellidos=?, direccionCorrespondencia=?, direccionEmail=?, contraseña=?");
 
-                    pst2.setString(1, celular);
-                    pst2.setString(2, cedula);
-                    pst2.setString(3, nombre);
-                    pst2.setString(4, apellidos);
-                    pst2.setString(5, direccionCorrespondencia);
-                    pst2.setString(6, direccionEmail);
-                    pst2.setString(7, contraseña);
+                    pst2.setString(1, cedula);
+                    pst2.setString(2, nombre);
+                    pst2.setString(3, apellidos);
+                    pst2.setString(4, direccionCorrespondencia);
+                    pst2.setString(5, direccionEmail);
+                    pst2.setString(6, contraseña);
 
                     pst2.executeUpdate();
                     pst2.close();
@@ -142,14 +138,17 @@ public class Administrador extends Usuario {
 
                     if (fila != -1) {
                         String celular = jt.getValueAt(fila, 0).toString();
-                        String cedula = jt.getValueAt(fila, 1).toString();
-                        String nombre = jt.getValueAt(fila, 2).toString();
-                        String apellidos = jt.getValueAt(fila, 3).toString();
-                        String direccion = jt.getValueAt(fila, 4).toString();
-                        String email = jt.getValueAt(fila, 5).toString();
-                        String contraseña = jt.getValueAt(fila, 6).toString();
 
-                        abrirInterfaz(celular, cedula, nombre, apellidos, direccion, email, contraseña);
+                        //Buscar usuario
+                        buscarUsuario(celular);
+
+                        //retornar los datos
+                        ActualizarUsuario act = new ActualizarUsuario();
+                        act.setTextField(celular);
+
+                        //abrir interfaz usuario
+                        act.setVisible(true);
+
                     }
                 }
             });
@@ -161,9 +160,34 @@ public class Administrador extends Usuario {
 
     }
 
-    private void abrirInterfaz(String celular, String cedula, String nombre, String apellidos, String direccion, String email, String contraseña) {
-        ActualizarUsuario actUsuario = new ActualizarUsuario();
-        actUsuario.setVisible(true);
+    public Usuario buscarUsuario(String celular) {
+        Usuario usuario = new Usuario();
+
+        try {
+
+            Connection cn = Conexion.conectar();
+            PreparedStatement pst = cn.prepareStatement("select * from usuarios where celular = ?");
+            pst.setString(1, celular);
+
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                usuario.setCelular(rs.getString("celular"));
+                usuario.setCedula(rs.getString("cedula"));
+                usuario.setNombre(rs.getString("nombre"));
+                usuario.setApellidos(rs.getString("apellidos"));
+                usuario.setDireccionCorrespondencia(rs.getString("direccionCorrespondencia"));
+                usuario.setDireccionEmail(rs.getString("direccionEmail"));
+                usuario.setCedula(rs.getString("cedula"));
+                usuario.setContraseña(rs.getString("contraseña"));
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Error en base");
+        }
+        return usuario;
     }
 
     public void crearAdmin(String cedula, String nombre, String apellidos, String direccionCorrespondencia,

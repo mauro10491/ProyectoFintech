@@ -15,6 +15,9 @@ public class crearAdministrador extends javax.swing.JFrame {
      */
     public crearAdministrador() {
         initComponents();
+        
+        setLocationRelativeTo(null);
+        setResizable(false);
     }
 
     /**
@@ -93,7 +96,7 @@ public class crearAdministrador extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(118, 118, 118)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(139, Short.MAX_VALUE))
+                .addContainerGap(539, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

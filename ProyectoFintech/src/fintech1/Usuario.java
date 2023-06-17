@@ -97,10 +97,11 @@ public class Usuario {
                 JOptionPane.showMessageDialog(null, "El numero de telefono ingresado ya se encuentra registrado");
             } else {
                 try {
-                    Connection cn = Conexion.conectar();
-                    PreparedStatement pst = cn.prepareStatement("insert into usuarios values(?,?,?,?,?,?,?)");
-                    
-                    PreparedStatement psts = cn.prepareStatement("insert into cuentas values(?,?)");
+                    Connection cn1 = Conexion.conectar();
+                    PreparedStatement pst = cn1.prepareStatement("insert into usuarios values(?,?,?,?,?,?,?)");
+
+                    PreparedStatement psts = cn1.prepareStatement("insert into cuentas values(?,?)");
+                    PreparedStatement pst3 = cn1.prepareStatement("insert into clientes values(?,?,?,?,?,?,?,?)");
 
                     pst.setString(1, celular);
                     pst.setString(2, cedula);
@@ -109,14 +110,24 @@ public class Usuario {
                     pst.setString(5, direccionCorrespondencia);
                     pst.setString(6, direccionEmail);
                     pst.setString(7, contraseña);
-                    
+
                     psts.setDouble(1, 0);
                     psts.setString(2, celular);
 
+                    pst3.setString(1, celular);
+                    pst3.setString(2, cedula);
+                    pst3.setString(3, nombre);
+                    pst3.setString(4, apellidos);
+                    pst3.setString(5, direccionCorrespondencia);
+                    pst3.setString(6, direccionEmail);
+                    pst3.setString(7, contraseña);
+                    pst3.setInt(8, 0);
+
                     pst.executeUpdate();
                     psts.executeUpdate();
+                    pst3.executeUpdate();
 
-                    cn.close();
+                    cn1.close();
 
                     JOptionPane.showMessageDialog(null, "Usuario creado con exito");
 

@@ -34,110 +34,130 @@ public class Cuenta extends Usuario {
     }
 
     public void realizarDeposito(double monto, String celular) {
-
         try {
+            Connection cn2 = Conexion.conectar();
+            PreparedStatement pst3 = cn2.prepareStatement("select * from cuentas where celular = ?");
+            pst3.setString(1, celular);
+            ResultSet rs2 = pst3.executeQuery();
 
-            Connection cn1 = Conexion.conectar();
-            PreparedStatement pst = cn1.prepareStatement("select * from usuarios where celular = ?");
-            pst.setString(1, celular);
-            ResultSet rs = pst.executeQuery();
-
-            if (rs.next()) {
+            if (rs2.next()) {
+                double saldoActual = rs2.getDouble("saldo");
 
                 try {
-                    Connection cn2 = Conexion.conectar();
-                    PreparedStatement pst3 = cn2.prepareStatement("select * from cuentas where celular = ?");
-                    pst3.setString(1, celular);
-                    ResultSet rs2 = pst3.executeQuery();
 
-                    if (rs2.next()) {
-                        double saldoActual = rs2.getDouble("saldo");
+                    Connection cn3 = Conexion.conectar();
+                    PreparedStatement pst2 = cn3.prepareStatement("update cuentas set saldo = ? where celular = ?");
+                    pst2.setDouble(1, saldoActual + monto);
+                    pst2.setString(2, celular);
 
-                        try {
+                    pst2.executeUpdate();
 
-                            Connection cn3 = Conexion.conectar();
-                            PreparedStatement pst2 = cn3.prepareStatement("update cuentas set saldo = ? where celular = ?");
-                            pst2.setDouble(1, saldoActual + monto);
-                            pst2.setString(2, celular);
+                    cn2.close();
 
-                            pst2.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "Deposito Exitoso");
 
-                            cn2.close();
-
-                            JOptionPane.showMessageDialog(null, "Deposito Exitoso");
-
-                        } catch (SQLException e) {
-                            System.out.println(e);
-                        }
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Cuenta no existe");
-                    }
                 } catch (SQLException e) {
                     System.out.println(e);
-                    JOptionPane.showMessageDialog(null, "Errrrrrroooooorrr");
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "La cuenta especificada no existe");
+                JOptionPane.showMessageDialog(null, "Cuenta no existe");
             }
-
         } catch (SQLException e) {
             System.out.println(e);
-            JOptionPane.showMessageDialog(null, "Error al realizar el deposito");
+            JOptionPane.showMessageDialog(null, "Errrrrrroooooorrr");
         }
+
     }
 
     public void realizarRetiro(double monto, String celular) {
 
         try {
+            Connection cn2 = Conexion.conectar();
+            PreparedStatement pst3 = cn2.prepareStatement("select * from cuentas where celular = ?");
+            pst3.setString(1, celular);
+            ResultSet rs2 = pst3.executeQuery();
 
-            Connection cn1 = Conexion.conectar();
-            PreparedStatement pst = cn1.prepareStatement("select * from usuarios where celular = ?");
-            pst.setString(1, celular);
-            ResultSet rs = pst.executeQuery();
-
-            if (rs.next()) {
-
+            if (rs2.next()) {
                 try {
-                    Connection cn2 = Conexion.conectar();
-                    PreparedStatement pst3 = cn2.prepareStatement("select * from cuentas where celular = ?");
-                    pst3.setString(1, celular);
-                    ResultSet rs2 = pst3.executeQuery();
+                    double saldoActual = rs2.getDouble("saldo");
+                    if (saldoActual > 0 && monto <= saldoActual) {
+                        Connection cn3 = Conexion.conectar();
+                        PreparedStatement pst2 = cn3.prepareStatement("update cuentas set saldo = ? where celular = ?");
 
-                    if (rs2.next()) {
-                        try {
-                            double saldoActual = rs2.getDouble("saldo");
-                            if (saldoActual > 0) {
-                                Connection cn3 = Conexion.conectar();
-                                PreparedStatement pst2 = cn3.prepareStatement("update cuentas set saldo = ? where celular = ?");
+                        pst2.setDouble(1, saldoActual - monto);
+                        pst2.setString(2, celular);
 
-                                pst2.setDouble(1, saldoActual - monto);
-                                pst2.setString(2, celular);
+                        pst2.executeUpdate();
 
-                                pst2.executeUpdate();
+                        cn2.close();
 
-                                cn2.close();
-
-                                JOptionPane.showMessageDialog(null, "Retiro Exitoso");
-                            } else {
-                                JOptionPane.showMessageDialog(null, "Saldo insuficiente");
-                            }
-                        } catch (SQLException e) {
-                            System.out.println(e);
-                        }
+                        JOptionPane.showMessageDialog(null, "Retiro Exitoso");
                     } else {
-                        JOptionPane.showMessageDialog(null, "Cuenta no existe");
+                        JOptionPane.showMessageDialog(null, "Saldo insuficiente");
                     }
                 } catch (SQLException e) {
                     System.out.println(e);
-                    JOptionPane.showMessageDialog(null, "Errrrrrroooooorrr");
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "La cuenta especificada no existe");
+                JOptionPane.showMessageDialog(null, "Cuenta no existe");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Error en la base de datos");
+        }
+    }
+
+    public void realizarTransferencia(double monto, String celularSalida, String celularLlegada) {
+        try {
+            Connection cn = Conexion.conectar();
+            PreparedStatement pst = cn.prepareStatement("select * from cuentas where celular = ?");
+            pst.setString(1, celularSalida);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                try {
+                    Connection cn2 = Conexion.conectar();
+                    PreparedStatement pst2 = cn2.prepareStatement("select * from cuentas where celular = ?");
+                    pst2.setString(1, celularLlegada);
+                    ResultSet rs2 = pst2.executeQuery();
+
+                    if (rs2.next()) {
+                        try {
+                            double saldoActualSalida = rs.getDouble("saldo");
+                            double saldoActualLlegada = rs2.getDouble("saldo");
+                            if (saldoActualSalida > 0 && monto <= saldoActualSalida) {
+                                Connection cn3 = Conexion.conectar();
+                                PreparedStatement pst3 = cn3.prepareStatement("update cuentas set saldo = ? where celular = ?");
+                                pst3.setDouble(1, saldoActualSalida - monto);
+                                pst3.setString(2, celularSalida);
+
+                                Connection cn4 = Conexion.conectar();
+                                PreparedStatement pst4 = cn4.prepareStatement("update cuentas set saldo = ? where celular = ?");
+                                pst4.setDouble(1, saldoActualLlegada + monto);
+                                pst4.setString(2, celularLlegada);
+
+                                pst3.executeUpdate();
+                                pst4.executeUpdate();
+                                
+                                JOptionPane.showMessageDialog(null, "Transferencia exitosa");
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Saldo insuficiente para realizar la transferencia");
+                            }
+
+                        } catch (Exception e) {
+                        }
+                    }
+
+                } catch (SQLException e) {
+                    System.out.println(e);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "La cuenta ingresada no existe");
             }
 
         } catch (SQLException e) {
             System.out.println(e);
-            JOptionPane.showMessageDialog(null, "Error al realizar el retiro");
         }
+
     }
 }
