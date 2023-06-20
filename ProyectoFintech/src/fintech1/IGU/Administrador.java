@@ -4,6 +4,8 @@
  */
 package fintech1.IGU;
 
+import javax.swing.WindowConstants;
+
 /**
  *
  * @author mauri
@@ -17,6 +19,8 @@ public class Administrador extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
+        
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
     /**

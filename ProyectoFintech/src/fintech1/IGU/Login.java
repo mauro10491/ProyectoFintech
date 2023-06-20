@@ -25,6 +25,8 @@ public class Login extends javax.swing.JFrame {
 
         setLocationRelativeTo(null);
         setResizable(false);
+        
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
     /**

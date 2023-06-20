@@ -5,18 +5,19 @@
 package fintech1.IGU;
 
 import fintech1.Usuario;
+import fintech1.Administrador;
 import javax.swing.WindowConstants;
 
 /**
  *
  * @author mauri
  */
-public class RestaurarPassword extends javax.swing.JFrame {
+public class RestaurarPassword_1 extends javax.swing.JFrame {
 
     /**
      * Creates new form RestaurarPassword
      */
-    public RestaurarPassword() {
+    public RestaurarPassword_1() {
         initComponents();
         
         setLocationRelativeTo(null);
@@ -187,9 +188,9 @@ public class RestaurarPassword extends javax.swing.JFrame {
         String confirmarPassword = txt_confirmarPassword.getText();
         String celular = txt_celular.getText();
         
-        Usuario usuario = new Usuario();
+        Administrador admin = new Administrador();
         
-        usuario.restaurarContraseña(password, confirmarPassword, celular);
+        admin.restaurarContraseñaAdmin(password, confirmarPassword, celular);
         
         txt_password.setText("");
         txt_confirmarPassword.setText("");

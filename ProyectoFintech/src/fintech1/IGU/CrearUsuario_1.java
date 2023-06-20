@@ -5,6 +5,7 @@
 package fintech1.IGU;
 
 import fintech1.Usuario;
+import javax.swing.WindowConstants;
 
 /**
  *
@@ -20,6 +21,8 @@ public class CrearUsuario_1 extends javax.swing.JFrame {
         
         setLocationRelativeTo(null);
         setResizable(false);
+        
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     }
 
     /**

@@ -24,6 +24,8 @@ public class Login_1 extends javax.swing.JFrame {
 
         setLocationRelativeTo(null);
         setResizable(false);
+        
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -193,8 +195,9 @@ public class Login_1 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        RestaurarPassword restaurarPassword = new RestaurarPassword();
+        RestaurarPassword_1 restaurarPassword = new RestaurarPassword_1();
         restaurarPassword.setVisible(rootPaneCheckingEnabled);
+        JOptionPane.showMessageDialog(null, "admin");
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void btn_entrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_entrarActionPerformed

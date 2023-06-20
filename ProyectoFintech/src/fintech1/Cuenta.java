@@ -138,7 +138,7 @@ public class Cuenta extends Usuario {
 
                                 pst3.executeUpdate();
                                 pst4.executeUpdate();
-                                
+
                                 JOptionPane.showMessageDialog(null, "Transferencia exitosa");
                             } else {
                                 JOptionPane.showMessageDialog(null, "Saldo insuficiente para realizar la transferencia");
@@ -159,5 +159,21 @@ public class Cuenta extends Usuario {
             System.out.println(e);
         }
 
+    }
+
+    public void verSaldo(String celular) {
+        Cuenta cuenta = new Cuenta();
+        try {
+
+            Connection cn = Conexion.conectar();
+            PreparedStatement pst = cn.prepareStatement("select saldo from cuentas where celular = ?");
+            pst.setString(1, celular);
+            ResultSet rs = pst.executeQuery();
+
+            cuenta.setSaldo(rs.getDouble("saldo"));
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
     }
 }

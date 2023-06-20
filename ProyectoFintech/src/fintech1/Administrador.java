@@ -45,7 +45,7 @@ public class Administrador extends Usuario {
     }
 
     public void editarUsuario(String cedula, String nombre, String apellidos, String direccionCorrespondencia,
-            String direccionEmail, String contraseña) {
+            String direccionEmail, String celular, String contraseña) {
 
         int validacion = 0;
 
@@ -69,31 +69,22 @@ public class Administrador extends Usuario {
         }
 
         if (validacion == 0) {
+            System.out.println(celular);
             try {
-                Connection cn = Conexion.conectar();
-                PreparedStatement pst = cn.prepareStatement("select celular from usuarios where celular = '" + celular + "'");
+                Connection cn2 = Conexion.conectar();
+                PreparedStatement pst2 = cn2.prepareStatement("update usuarios set cedula=?, nombre=?, apellidos=?, direccionCorrespondencia=?, direccionEmail=?, contraseña=? where celular = '" + celular + "'");
 
-                ResultSet rs = pst.executeQuery();
+                pst2.setString(1, cedula);
+                pst2.setString(2, nombre);
+                pst2.setString(3, apellidos);
+                pst2.setString(4, direccionCorrespondencia);
+                pst2.setString(5, direccionEmail);
+                pst2.setString(6, contraseña);
 
-                if (rs.next()) {
-                    JOptionPane.showMessageDialog(null, "Numero de telefono no disponible");
-                } else {
-                    Connection cn2 = Conexion.conectar();
-                    PreparedStatement pst2 = cn2.prepareStatement("update usuarios set cedula=?, nombre=?, apellidos=?, direccionCorrespondencia=?, direccionEmail=?, contraseña=?");
+                pst2.executeUpdate();
+                pst2.close();
 
-                    pst2.setString(1, cedula);
-                    pst2.setString(2, nombre);
-                    pst2.setString(3, apellidos);
-                    pst2.setString(4, direccionCorrespondencia);
-                    pst2.setString(5, direccionEmail);
-                    pst2.setString(6, contraseña);
-
-                    pst2.executeUpdate();
-                    pst2.close();
-
-                    JOptionPane.showMessageDialog(null, "Actualización exitosa");
-                }
-
+                JOptionPane.showMessageDialog(null, "Actualización exitosa");
             } catch (SQLException e) {
                 System.out.println(e);
             }
@@ -203,6 +194,7 @@ public class Administrador extends Usuario {
                 try {
                     Connection cn = Conexion.conectar();
                     PreparedStatement pst = cn.prepareStatement("insert into administradores values(?,?,?,?,?,?,?)");
+                    PreparedStatement pst3 = cn.prepareStatement("insert into usuarios values(?,?,?,?,?,?,?)");
 
                     pst.setString(1, celular);
                     pst.setString(2, cedula);
@@ -212,7 +204,16 @@ public class Administrador extends Usuario {
                     pst.setString(6, direccionEmail);
                     pst.setString(7, contraseña);
 
+                    pst3.setString(1, celular);
+                    pst3.setString(2, cedula);
+                    pst3.setString(3, nombre);
+                    pst3.setString(4, apellidos);
+                    pst3.setString(5, direccionCorrespondencia);
+                    pst3.setString(6, direccionEmail);
+                    pst3.setString(7, contraseña);
+
                     pst.executeUpdate();
+                    pst3.executeUpdate();
 
                     cn.close();
 
@@ -226,6 +227,49 @@ public class Administrador extends Usuario {
         } catch (SQLException e) {
             System.out.println(e);
             JOptionPane.showMessageDialog(null, "Error en la base de datos");
+        }
+
+    }
+    
+        public void restaurarContraseñaAdmin(String password, String confirmarPassword, String celular) {
+
+        try {
+            Connection cn2 = Conexion.conectar();
+            PreparedStatement pst2 = cn2.prepareStatement("select celularAdm from administradores where celularAdm = ?");
+            pst2.setString(1, celular);
+            ResultSet rs = pst2.executeQuery();
+
+            if (rs.next()) {
+                if (!password.equals("") && !confirmarPassword.equals("")) {
+                    if (password.equals(confirmarPassword)) {
+                        try {
+                            Connection cn = Conexion.conectar();
+                            PreparedStatement pst = cn.prepareStatement("update administradores set contraseña=? where celularAdm = '" + celular + "'");
+
+                            pst.setString(1, password);
+                            pst.executeUpdate();
+                            cn.close();
+
+                            JOptionPane.showMessageDialog(null, "Restauración Exitosa");
+
+                        } catch (SQLException e) {
+                            System.out.println(e);
+                            JOptionPane.showMessageDialog(null, "Error al restarurar la contraseña");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Debes ingresar los datos");
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe el usuario registrado con el celular");
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
 
     }

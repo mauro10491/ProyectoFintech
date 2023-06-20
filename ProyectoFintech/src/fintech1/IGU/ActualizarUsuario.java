@@ -8,6 +8,7 @@ import fintech1.Administrador;
 import fintech1.Usuario;
 import fintech1.DB.Conexion;
 import java.sql.*;
+import javax.swing.WindowConstants;
 
 /**
  *
@@ -22,6 +23,8 @@ public class ActualizarUsuario extends javax.swing.JFrame {
         initComponents();
         setResizable(false);
         setLocationRelativeTo(null);
+        
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
     }
 
@@ -47,6 +50,9 @@ public class ActualizarUsuario extends javax.swing.JFrame {
         txt_contraseña = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         btn_actualizar = new javax.swing.JButton();
+        celular = new javax.swing.JLabel();
+        txt_celular = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -66,6 +72,15 @@ public class ActualizarUsuario extends javax.swing.JFrame {
         btn_actualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_actualizarActionPerformed(evt);
+            }
+        });
+
+        celular.setText("jLabel1");
+
+        jButton1.setText("atras");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -95,11 +110,28 @@ public class ActualizarUsuario extends javax.swing.JFrame {
                         .addGap(149, 149, 149)
                         .addComponent(btn_actualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(565, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(celular, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txt_celular, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(22, 22, 22))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(68, 68, 68)
+                .addContainerGap()
+                .addComponent(celular)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_celular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addGap(16, 16, 16)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -133,24 +165,31 @@ public class ActualizarUsuario extends javax.swing.JFrame {
 
     private void btn_actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_actualizarActionPerformed
 
+        
         String cedula = txt_cedula.getText();
         String nombre = txt_nombre.getText();
         String apellidos = txt_apellido.getText();
         String direccionCorrespondencia = txt_direccion.getText();
         String direccionEmail = txt_email.getText();
         String contraseña = txt_contraseña.getText();
+        String celular = txt_celular.getText();
 
         Administrador admin = new Administrador();
-        admin.editarUsuario(cedula, nombre, apellidos, direccionCorrespondencia, direccionEmail, contraseña);
+        admin.editarUsuario(cedula, nombre, apellidos, direccionCorrespondencia, direccionEmail, celular, contraseña);
 
 
 
     }//GEN-LAST:event_btn_actualizarActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     public void setTextField(String celular){
         Administrador admin = new Administrador();
         Usuario usuario = admin.buscarUsuario(celular);
         
+        txt_celular.setText(usuario.getCelular());
         txt_cedula.setText(usuario.getCedula());
         txt_nombre.setText(usuario.getNombre());
         txt_apellido.setText(usuario.getApellidos());
@@ -188,13 +227,15 @@ public class ActualizarUsuario extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ActualizarUsuario().setVisible(true);
+            new ActualizarUsuario().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_actualizar;
+    private javax.swing.JLabel celular;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -203,6 +244,7 @@ public class ActualizarUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JTextField txt_apellido;
     private javax.swing.JTextField txt_cedula;
+    private javax.swing.JTextField txt_celular;
     private javax.swing.JTextField txt_contraseña;
     private javax.swing.JTextField txt_direccion;
     private javax.swing.JTextField txt_email;

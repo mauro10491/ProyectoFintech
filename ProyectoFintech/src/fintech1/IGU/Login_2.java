@@ -24,6 +24,8 @@ public class Login_2 extends javax.swing.JFrame {
 
         setLocationRelativeTo(null);
         setResizable(false);
+        
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     }
 
     /**

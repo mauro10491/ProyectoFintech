@@ -8,6 +8,7 @@ import fintech1.Administrador;
 import fintech1.Usuario;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.WindowConstants;
 
 /**
  *
@@ -29,7 +30,9 @@ public class VerUsuarios extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jt);
 
         admin.verListaUsuarios(jt);    
-       
+        
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        
     }
     
     
