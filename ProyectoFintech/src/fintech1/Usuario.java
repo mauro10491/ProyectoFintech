@@ -220,7 +220,6 @@ public class Usuario {
             try {
                 Connection cn = Conexion.conectar();
                 PreparedStatement pst = cn.prepareStatement("select celular from usuarios where celular = '" + celular + "'");
-
                 ResultSet rs = pst.executeQuery();
 
                 if (rs.next()) {
@@ -238,7 +237,7 @@ public class Usuario {
                     pst2.setString(7, contraseña);
 
                     pst2.executeUpdate();
-                    pst2.close();
+                    cn.close();
 
                     JOptionPane.showMessageDialog(null, "Actualización exitosa");
                 }
