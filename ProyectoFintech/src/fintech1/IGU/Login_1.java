@@ -197,7 +197,6 @@ public class Login_1 extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         RestaurarPassword_1 restaurarPassword = new RestaurarPassword_1();
         restaurarPassword.setVisible(rootPaneCheckingEnabled);
-        JOptionPane.showMessageDialog(null, "admin");
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void btn_entrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_entrarActionPerformed
@@ -215,7 +214,6 @@ public class Login_1 extends javax.swing.JFrame {
                 if (rs.next()) {
                     Administrador admin = new Administrador(txt_celular.getText());
                     admin.setVisible(true);
-                    JOptionPane.showMessageDialog(null, "Login como administrador");
                 } else {
                     JOptionPane.showMessageDialog(null, "Datos de administrador incorrectos");
                 }

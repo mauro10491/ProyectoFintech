@@ -233,7 +233,6 @@ public class Login_2 extends javax.swing.JFrame {
                     Cliente frmCliente = new Cliente(txt_celular.getText());
                     this.setVisible(false);                   
                     frmCliente.setVisible(true);
-                    JOptionPane.showMessageDialog(null, "Login como usuario");
                 } else {
                     JOptionPane.showMessageDialog(null, "Datos incorrectos");
                 }

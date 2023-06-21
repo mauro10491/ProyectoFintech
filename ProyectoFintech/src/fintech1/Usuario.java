@@ -156,9 +156,13 @@ public class Usuario {
                         try {
                             Connection cn = Conexion.conectar();
                             PreparedStatement pst = cn.prepareStatement("update usuarios set contraseña=? where celular = '" + celular + "'");
+                            PreparedStatement psts = cn.prepareStatement("update clientes set contraseña = ? where celular = '" + celular + "'");
 
                             pst.setString(1, password);
                             pst.executeUpdate();
+                            
+                            psts.setString(1, password);
+                            psts.executeUpdate();
                             cn.close();
 
                             JOptionPane.showMessageDialog(null, "Restauración Exitosa");
