@@ -161,19 +161,25 @@ public class Cuenta extends Usuario {
 
     }
 
-    public void verSaldo(String celular) {
-        Cuenta cuenta = new Cuenta();
+    public String verSaldo(String celular) {
+        String saldo = "";
         try {
-
+            System.out.println("TT" + celular);
             Connection cn = Conexion.conectar();
             PreparedStatement pst = cn.prepareStatement("select saldo from cuentas where celular = ?");
             pst.setString(1, celular);
             ResultSet rs = pst.executeQuery();
-
-            cuenta.setSaldo(rs.getDouble("saldo"));
+            
+            if (rs.next()) {
+                System.out.println(rs.getString(1) + " saldo");
+                saldo = rs.getString(1);
+            }else{
+                saldo = "0.0";
+            }
 
         } catch (SQLException e) {
             System.out.println(e);
         }
+        return saldo;
     }
 }

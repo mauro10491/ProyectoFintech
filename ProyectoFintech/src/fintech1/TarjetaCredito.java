@@ -81,12 +81,12 @@ public class TarjetaCredito {
 
     public void asignarTarjeta(Usuario usuario) {
 
-        if (ingresosMensuales >= 2000) {
-            usuario.setTarjetaAprobada(true);
-            usuario.setCupoDisponible(ingresosMensuales * 0.5);
+        if (ingresosMensuales >= 2000000) {
+            //usuario.setTarjetaAprobada(true);
+            //usuario.setCupoDisponible(ingresosMensuales * 0.5);
         } else {
-            usuario.setTarjetaAprobada(false);
-            usuario.setCupoDisponible(0);
+            //usuario.setTarjetaAprobada(false);
+            //usuario.setCupoDisponible(0);
         }
 
     }

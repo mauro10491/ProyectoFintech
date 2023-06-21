@@ -33,6 +33,9 @@ public class VerUsuarios extends javax.swing.JFrame {
         
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
+        
     }
     
     

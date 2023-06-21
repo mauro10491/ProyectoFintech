@@ -24,7 +24,7 @@ public class Login_1 extends javax.swing.JFrame {
 
         setLocationRelativeTo(null);
         setResizable(false);
-        
+
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     }
 
@@ -213,10 +213,10 @@ public class Login_1 extends javax.swing.JFrame {
                 ResultSet rs = pst.executeQuery();
 
                 if (rs.next()) {
-                    Administrador admin = new Administrador();
+                    Administrador admin = new Administrador(txt_celular.getText());
                     admin.setVisible(true);
                     JOptionPane.showMessageDialog(null, "Login como administrador");
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, "Datos de administrador incorrectos");
                 }
             } catch (SQLException e) {

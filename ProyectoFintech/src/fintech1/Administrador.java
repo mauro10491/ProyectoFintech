@@ -195,6 +195,7 @@ public class Administrador extends Usuario {
                     Connection cn = Conexion.conectar();
                     PreparedStatement pst = cn.prepareStatement("insert into administradores values(?,?,?,?,?,?,?)");
                     PreparedStatement pst3 = cn.prepareStatement("insert into usuarios values(?,?,?,?,?,?,?)");
+                    PreparedStatement prest = cn.prepareStatement("insert into cuentas values(?,?)");
 
                     pst.setString(1, celular);
                     pst.setString(2, cedula);
@@ -211,9 +212,13 @@ public class Administrador extends Usuario {
                     pst3.setString(5, direccionCorrespondencia);
                     pst3.setString(6, direccionEmail);
                     pst3.setString(7, contraseña);
+                    
+                    prest.setDouble(1, 0);
+                    prest.setString(2, celular);
 
                     pst.executeUpdate();
                     pst3.executeUpdate();
+                    prest.executeUpdate();
 
                     cn.close();
 

@@ -16,6 +16,8 @@ import javax.swing.WindowConstants;
  */
 public class Login_2 extends javax.swing.JFrame {
 
+    public String celularLogin = "";
+
     /**
      * Creates new form Login
      */
@@ -24,7 +26,7 @@ public class Login_2 extends javax.swing.JFrame {
 
         setLocationRelativeTo(null);
         setResizable(false);
-        
+
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     }
 
@@ -228,10 +230,11 @@ public class Login_2 extends javax.swing.JFrame {
                 ResultSet rs = pst.executeQuery();
 
                 if (rs.next()) {
-                    Cliente cliente = new Cliente();
-                    cliente.setVisible(true);
+                    Cliente frmCliente = new Cliente(txt_celular.getText());
+                    this.setVisible(false);                   
+                    frmCliente.setVisible(true);
                     JOptionPane.showMessageDialog(null, "Login como usuario");
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, "Datos incorrectos");
                 }
             } catch (SQLException e) {
