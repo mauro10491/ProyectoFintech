@@ -212,7 +212,7 @@ public class Administrador extends Usuario {
                     pst3.setString(5, direccionCorrespondencia);
                     pst3.setString(6, direccionEmail);
                     pst3.setString(7, contraseña);
-                    
+
                     prest.setDouble(1, 0);
                     prest.setString(2, celular);
 
@@ -235,8 +235,8 @@ public class Administrador extends Usuario {
         }
 
     }
-    
-        public void restaurarContraseñaAdmin(String password, String confirmarPassword, String celular) {
+
+    public void restaurarContraseñaAdmin(String password, String confirmarPassword, String celular) {
 
         try {
             Connection cn2 = Conexion.conectar();
