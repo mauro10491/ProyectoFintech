@@ -129,7 +129,7 @@ public class Usuario {
 
                     cn1.close();
 
-                    JOptionPane.showMessageDialog(null, "Usuario creado con exito");
+                    JOptionPane.showMessageDialog(null, "Usuario creado exitosamente");
 
                 } catch (SQLException e) {
                     System.out.println(e);
